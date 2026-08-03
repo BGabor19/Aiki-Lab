@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiki-Lab — Aikido szeminárium sorozat</title>
+<meta name="description" content="Aiki-Lab: évtizedes aikido szemináriumok. Történet, közelgő alkalmak, jelentkezés.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,500&family=Noto+Serif:wght@400;600&family=Noto+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --paper:        #F1EAD9;   /* washi papír alapszín */
+    --paper-deep:   #E6DABF;   /* mélyebb papír árnyalat, szekció-váltáshoz */
+    --ink:          #201C18;   /* tus-fekete, meleg tónusú */
+    --ink-soft:     #4B463D;   /* lágyabb tus, futószöveghez */
+    --ink-faint:    rgba(32,28,24,0.16);   /* halvány vonalak */
+    --seal:         #9C3223;   /* pecsét-vermilion */
+    --seal-soft:    rgba(156,50,35,0.10);
+    --paper-shadow: rgba(32,28,24,0.08);
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body:    'Noto Serif', serif;
+    --font-label:   'Noto Sans', sans-serif;
+
+    --container: 1120px;
+    --edge: clamp(20px, 6vw, 72px);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* halvány papírszemcse - tiszta CSS/SVG zaj, nincs szükség külső képre */
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    pointer-events:none;
+    opacity:0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    z-index: 1;
+  }
+
+  img{ max-width:100%; height:auto; display:block; }
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--edge);
+  }
+
+  h1,h2,h3{
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--seal);
+  }
+  .eyebrow::before{
+    content:"";
+    width: 14px; height:1px;
+    background: var(--seal);
+    display:inline-block;
+  }
+
+  .lede{
+    font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+    color: var(--ink-soft);
+    max-width: 54ch;
+  }
+
+  /* ============ GOMBOK ============ */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    padding: 0.95em 1.7em;
+    border-radius: 2px;
+    text-decoration:none;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .btn-primary{
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 3px 3px 0 var(--seal-soft);
+  }
+  .btn-primary:hover{ transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--seal-soft); }
+  .btn-ghost{
+    background: transparent;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink-faint);
+    padding-left:0; padding-right:0;
+    border-radius:0;
+  }
+  .btn-ghost:hover{ border-color: var(--seal); color: var(--seal); }
+
+  /* ============ NAV ============ */
+  header.site{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(241,234,217,0.86);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px var(--edge);
+  }
+  .brand{
+    display:flex; align-items:center; gap:.6em;
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: 1.35rem;
+    text-decoration:none;
+    letter-spacing: 0.01em;
+  }
+  .brand svg{ width:28px; height:28px; }
+  .nav-links{
+    display:flex; gap: clamp(16px, 3vw, 40px);
+    font-family: var(--font-label);
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{ text-decoration:none; color: var(--ink-soft); }
+  .nav-links a:hover{ color: var(--seal); }
+  .nav-links li:last-child a{
+    color: var(--ink); font-weight:600;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    padding: clamp(60px, 12vw, 130px) var(--edge) clamp(70px, 10vw, 110px);
+    overflow:hidden;
+  }
+  .hero-grid{
+    max-width: var(--container);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items:center;
+    gap: 40px;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.03;
+    font-weight: 600;
+  }
+  .hero h1 em{
+    font-style: italic;
+    font-weight:500;
+    color: var(--seal);
+  }
+  .hero .eyebrow{ margin-bottom: 22px; }
+  .hero .lede{ margin: 26px 0 36px; }
+  .hero-cta{ display:flex; gap: 20px; flex-wrap:wrap; align-items:center; }
+
+  .ensō-stage{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    min-height: 260px;
+  }
+  .ensō-stage svg{ width: min(420px, 100%); height:auto; }
+  .ensō-stroke{
+    fill:none;
+    stroke: var(--ink);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 2.6s cubic-bezier(.5,0,.15,1) 0.3s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .ensō-stroke{ animation: none; stroke-dashoffset:0; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ============ ECSETVONÁS ELVÁLASZTÓ ============ */
+  .brush-divider{
+    width:100%; height:34px;
+    display:block;
+    opacity:0.55;
+  }
+  .brush-divider path{ stroke: var(--ink); stroke-width:2; fill:none; stroke-linecap:round; }
+
+  /* ============ SZEKCIÓ ÁLTALÁNOS ============ */
+  section{ padding: clamp(56px, 9vw, 100px) 0; position:relative; }
+  .section-alt{ background: var(--paper-deep); }
+  .section-head{ max-width: 640px; margin-bottom: clamp(34px, 5vw, 56px); }
+  .section-head h2{ font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-top: 14px; }
+
+  /* ============ TÖRTÉNET / IDŐVONAL ============ */
+  .story{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items:start;
+  }
+  .story .lede{ max-width: none; }
+  .story p + p{ margin-top: 1.1em; }
+
+  .timeline{ list-style:none; margin:0; padding:0; border-left: 1px solid var(--ink-faint); }
+  .timeline li{
+    position:relative;
+    padding: 4px 0 30px 30px;
+  }
+  .timeline li:last-child{ padding-bottom:0; }
+  .timeline .mark{
+    position:absolute; left:-8px; top:6px;
+    width:15px; height:15px;
+  }
+  .timeline .mark svg{ width:100%; height:100%; }
+  .timeline .mark svg path{ stroke: var(--seal); stroke-width:6; fill:none; stroke-linecap:round; }
+  .timeline .year{
+    font-family: var(--font-label); font-weight:600;
+    font-size:0.8rem; letter-spacing:0.08em; color: var(--seal);
+    display:block; margin-bottom:4px;
+  }
+  .timeline h3{ font-size: 1.15rem; font-weight:600; margin-bottom: 4px; }
+  .timeline p{ color: var(--ink-soft); font-size: 0.96rem; margin:0; }
+
+  /* ============ KÖZELGŐ SZEMINÁRIUM ============ */
+  .seminar-card{
+    background: var(--paper);
+    border: 1px solid var(--ink-faint);
+    padding: clamp(28px, 5vw, 52px);
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items:center;
+    position:relative;
+  }
+  .seminar-card::before{
+    content:"";
+    position:absolute; top:14px; right:14px;
+    width:52px; height:52px;
+    background: var(--seal);
+    -webkit-mask: radial-gradient(circle at center, #000 62%, transparent 64%);
+            mask: radial-gradient(circle at center, #000 62%, transparent 64%);
+    opacity:.9;
+  }
+  .seminar-date{
+    font-family: var(--font-display);
+    font-weight:600;
+    line-height:1;
+    text-align:center;
+  }
+  .seminar-date .day{ font-size: clamp(2.6rem,5vw,3.6rem); display:block; }
+  .seminar-date .month{
+    font-family: var(--font-label); font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; font-size:0.78rem; color: var(--seal);
+  }
+  .seminar-body h3{ font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom:8px; }
+  .seminar-meta{
+    display:flex; flex-wrap:wrap; gap: 8px 22px;
+    font-family: var(--font-label); font-size:0.85rem; color: var(--ink-soft);
+    margin: 12px 0 0;
+    list-style:none; padding:0;
+  }
+  .seminar-meta li::before{ content:"— "; color: var(--ink-faint); }
+
+  /* ============ OKTATÓK ============ */
+  .instructors{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 34px;
+  }
+  .instructor{ text-align:left; }
+  .avatar{
+    width:100%; aspect-ratio: 1/1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(32,28,24,0.10), transparent 60%),
+      var(--paper-deep);
+    border: 1px solid var(--ink-faint);
+    margin-bottom: 18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .avatar svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .instructor h3{ font-size:1.25rem; margin-bottom:2px; }
+  .instructor .grade{
+    font-family: var(--font-label); font-size:0.78rem; letter-spacing:.08em;
+    color: var(--seal); text-transform:uppercase; display:block; margin-bottom:10px;
+  }
+  .instructor p{ color: var(--ink-soft); font-size:0.95rem; margin:0; }
+
+  /* ============ ARCHÍVUM / GALÉRIA ============ */
+  .archive-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .archive-item{
+    aspect-ratio: 3/4;
+    background: var(--paper-deep);
+    border: 1px solid var(--ink-faint);
+    position:relative;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .archive-item::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(135deg, transparent 0 10px, var(--ink-faint) 10px 11px);
+    opacity:.5;
+  }
+  .archive-item span{
+    position:relative;
+    font-family: var(--font-label); font-size:0.72rem; letter-spacing:.06em;
+    padding: 10px 12px; color: var(--ink-soft);
+    background: linear-gradient(to top, var(--paper-deep) 40%, transparent);
+    width:100%;
+  }
+  .archive-note{
+    margin-top: 22px;
+    font-size:0.9rem; color: var(--ink-soft);
+    font-family: var(--font-label);
+  }
+
+  /* ============ JELENTKEZÉS ============ */
+  .cta-panel{
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(48px, 8vw, 88px) var(--edge);
+    text-align:center;
+  }
+  .cta-panel h2{ color: var(--paper); font-size: clamp(2rem, 4vw, 3rem); }
+  .cta-panel .lede{ color: rgba(241,234,217,0.75); margin: 18px auto 34px; }
+  .cta-panel .btn-primary{ background: var(--paper); color: var(--ink); box-shadow:none; }
+  .cta-panel .btn-primary:hover{ background: var(--seal); color: var(--paper); }
+
+  /* ============ FOOTER ============ */
+  footer{
+    padding: 46px var(--edge) 60px;
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;
+    font-family: var(--font-label); font-size:0.82rem; color: var(--ink-soft);
+  }
+  .seal-stamp{ width:46px; height:46px; opacity:.85; }
+  .footer-brand{ display:flex; align-items:center; gap:14px; }
+  .footer-brand strong{ font-family: var(--font-display); font-size:1.15rem; color: var(--ink); }
+
+  /* ============ RESPONZÍV TÖRÉSPONTOK ============ */
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .ensō-stage{ order:-1; min-height:180px; }
+    .ensō-stage svg{ width:min(260px,70%); }
+    .story{ grid-template-columns: 1fr; }
+    .instructors{ grid-template-columns: 1fr 1fr; }
+    .archive-grid{ grid-template-columns: repeat(2,1fr); }
+    .seminar-card{ grid-template-columns: 1fr; text-align:center; }
+    .seminar-meta{ justify-content:center; }
+  }
+
+  @media (max-width: 620px){
+    .nav-links{ gap:14px; font-size:0.78rem; }
+    .instructors{ grid-template-columns: 1fr; }
+    .archive-grid{ grid-template-columns: 1fr 1fr; }
+    footer{ flex-direction:column; align-items:flex-start; }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 4 C 30 4 35 12 34 21 C 33 30 25 36 16 34" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      Aiki-Lab
+    </a>
+    <ul class="nav-links">
+      <li><a href="#tortenet">Történet</a></li>
+      <li><a href="#szeminarium">Következő alkalom</a></li>
+      <li><a href="#oktatok">Oktatók</a></li>
+      <li><a href="#archivum">Archívum</a></li>
+      <li><a href="#jelentkezes">Jelentkezés</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-grid wrap" style="padding:0;">
+      <div>
+        <span class="eyebrow">Aikido szeminárium sorozat</span>
+        <h1>Egy kör,<br> ami <em>sosem</em><br> zárul le.</h1>
+        <p class="lede">
+          Az Aiki-Lab évtizedes baráti kezdeményezésből nőtt szemináriumsorozat:
+          minden januárban évnyitóval, minden szeptemberben szezonnyitóval,
+          három oktatóval és egy egyre bővülő közösséggel.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#jelentkezes">Jelentkezés a szemináriumra</a>
+          <a class="btn btn-ghost" href="#tortenet">A történetünk</a>
+        </div>
+      </div>
+      <div class="ensō-stage" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <path class="ensō-stroke"
+            d="M 200 55
+               C 300 55 345 130 340 205
+               C 336 278 278 335 195 338
+               C 118 341 62 288 58 213
+               C 55 150 90 95 150 68" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <svg class="brush-divider wrap" viewBox="0 0 1120 34" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M10 17 C 250 5, 500 29, 760 14 S 1080 20 1110 17"/>
+  </svg>
+
+  <!-- ============ TÖRTÉNET ============ -->
+  <section id="tortenet">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">A kezdetek</span>
+        <h2>Egy baráti kör, ami szemináriummá nőtte ki magát</h2>
+      </div>
+      <div class="story">
+        <div>
+          <p>
+            <!-- CSERÉLD LE a saját, tényleges alapítás-történetetekre: évszám, helyszín, hogyan indult -->
+            Nem egy szervezet döntése hozta létre az Aiki-Labot, hanem néhány gyakorló
+            elhatározása, hogy évente kétszer összegyűjti a barátait egy közös napra.
+            Kezdetben egyetlen terem, egy-két oktató és egy maroknyi résztvevő — mára
+            visszatérő, generációkon átívelő hagyomány, amit ugyanaz a szellemiség tart életben:
+            a nyitottság és a közös gyakorlás öröme.
+          </p>
+          <p>
+            Az elmúlt évtizedekben a szemináriumok formája alig változott: egy nap,
+            három oktató, és annyi résztvevő, amennyit a terem és a barátság elbír.
+            Most először adunk ennek a hagyománynak nevet és arcot — ez az Aiki-Lab.
+          </p>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year"><!-- ÍRD ÁT az alapítás évére -->Kezdetek</span>
+            <h3>Az első baráti szeminárium</h3>
+            <p>Néhány gyakorló elhatározza, hogy évente kétszer közös napot tart.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">Évek során</span>
+            <h3>Állandósul az évnyitó és a szezonnyitó</h3>
+            <p>Kialakul a mai ritmus: január — évnyitó, szeptember — szezonnyitó, mindig három oktatóval.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2026</span>
+            <h3>Megszületik az Aiki-Lab</h3>
+            <p>A hagyomány saját nevet, arculatot és otthont kap.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KÖZELGŐ SZEMINÁRIUM ============ -->
+  <section id="szeminarium" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Következő alkalom</span>
+        <h2>Szezonnyitó szeminárium</h2>
+      </div>
+      <div class="seminar-card">
+        <div class="seminar-date">
+          <!-- ÍRD ÁT a tényleges dátumra -->
+          <span class="day">06</span>
+          <span class="month">Szeptember</span>
+        </div>
+        <div class="seminar-body">
+          <h3>Egynapos szeminárium — három oktatóval</h3>
+          <p style="color:var(--ink-soft); margin:0;">
+            <!-- ÍRD ÁT a helyszínt és a rövid leírást -->
+            Egy nap, közös gyakorlás, régi és új arcok. A részletes program és a helyszín
+            hamarosan frissül — a jelentkezés már most megnyitható.
+          </p>
+          <ul class="seminar-meta">
+            <li>Helyszín: hamarosan</li>
+            <li>3 oktató</li>
+            <li>Minden szint</li>
+          </ul>
+        </div>
+        <a class="btn btn-primary" href="#jelentkezes">Jelentkezés</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OKTATÓK ============ -->
+  <section id="oktatok">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Kik vezetik</span>
+        <h2>A három oktató</h2>
+      </div>
+      <div class="instructors">
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
+          </div>
+          <h3><!-- Oktató neve -->Oktató neve</h3>
+          <span class="grade"><!-- pl. dan fokozat -->Dan fokozat</span>
+          <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
+        </article>
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
+          </div>
+          <h3>Oktató neve</h3>
+          <span class="grade">Dan fokozat</span>
+          <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
+        </article>
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
+          </div>
+          <h3>Oktató neve</h3>
+          <span class="grade">Dan fokozat</span>
+          <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCHÍVUM ============ -->
+  <section id="archivum" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Visszatekintés</span>
+        <h2>Korábbi plakátok és felvételek</h2>
+      </div>
+      <div class="archive-grid">
+        <div class="archive-item"><span>Plakát — korábbi évnyitó</span></div>
+        <div class="archive-item"><span>Plakát — korábbi szezonnyitó</span></div>
+        <div class="archive-item"><span>Videó — edzésrészlet</span></div>
+        <div class="archive-item"><span>Plakát — korai évek</span></div>
+      </div>
+      <p class="archive-note">
+        Ide kerülnek majd a beszkennelt korábbi plakátok és a szemináriumokról készült videók —
+        ezek a mezők egyszerűen cserélhetők valódi képekre/linkekre a GitHub-repóban.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ JELENTKEZÉS ============ -->
+  <section id="jelentkezes" class="cta-panel">
+    <div class="wrap" style="padding:0; max-width:640px; margin:0 auto;">
+      <span class="eyebrow" style="color:var(--paper);">Gyere el</span>
+      <h2>Jelentkezz a következő szemináriumra</h2>
+      <p class="lede">
+        A jelentkezés egy rövid űrlappal történik — pár adat, és foglaljuk is a helyed.
+      </p>
+      <!-- CSERÉLD LE a href-et a saját Google Form / jelentkezési link URL-jére -->
+      <a class="btn btn-primary" href="#" target="_blank" rel="noopener">Jelentkezési űrlap megnyitása</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <svg class="seal-stamp" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="4" y="4" width="92" height="92" rx="6" fill="none" stroke="var(--seal)" stroke-width="4"/>
+      <path d="M30 60 C30 35 45 25 50 25 C55 25 70 35 70 60" fill="none" stroke="var(--seal)" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <strong>Aiki-Lab</strong><br>
+      Aikido szeminárium sorozat — évnyitó januárban, szezonnyitó szeptemberben.
+    </div>
+  </div>
+  <div>
+    <!-- ÍRD ÁT a tényleges kapcsolati e-mail címre: kérdés, hogy mi ez, mert google csoportba csak tagok írhatnak -->
+    aikido-szeminariumok@googlegroups.com · © <span id="year"></span> Aiki-Lab
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
