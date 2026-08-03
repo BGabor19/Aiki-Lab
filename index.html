@@ -328,6 +328,11 @@
     display:flex; align-items:flex-end;
     overflow:hidden;
   }
+  .archive-item img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  }
   .archive-item::before{
     content:"";
     position:absolute; inset:0;
@@ -416,7 +421,7 @@
   <section class="hero">
     <div class="hero-grid wrap" style="padding:0;">
       <div>
-        <span class="eyebrow">Aikido szeminárium sorozat</span>
+        <span class="eyebrow">Aiki-Lab: baráti aikido szeminárium sorozat</span>
         <h1>Egy kör,<br> ami <em>sosem</em><br> zárul le.</h1>
         <p class="lede">
           Az Aiki-Lab évtizedes baráti kezdeményezésből nőtt szemináriumsorozat:
@@ -471,7 +476,7 @@
         <ul class="timeline">
           <li>
             <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
-            <span class="year"><!-- ÍRD ÁT az alapítás évére -->Kezdetek</span>
+            <span class="year"><!-- ÍRD ÁT az alapítás évére -->2012 Kezdetek</span>
             <h3>Az első baráti szeminárium</h3>
             <p>Néhány gyakorló elhatározza, hogy évente kétszer közös napot tart.</p>
           </li>
@@ -502,7 +507,7 @@
       <div class="seminar-card">
         <div class="seminar-date">
           <!-- ÍRD ÁT a tényleges dátumra -->
-          <span class="day">06</span>
+          <span class="day">12</span>
           <span class="month">Szeptember</span>
         </div>
         <div class="seminar-body">
@@ -535,24 +540,24 @@
           <div class="avatar" aria-hidden="true">
             <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
           </div>
-          <h3><!-- Oktató neve -->Oktató neve</h3>
-          <span class="grade"><!-- pl. dan fokozat -->Dan fokozat</span>
+          <h3><!-- Oktató neve -->Dénes István</h3>
+          <span class="grade"><!-- pl. dan fokozat -->4. Dan fokozat</span>
           <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
         </article>
         <article class="instructor">
           <div class="avatar" aria-hidden="true">
             <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
           </div>
-          <h3>Oktató neve</h3>
-          <span class="grade">Dan fokozat</span>
+          <h3>Juhász Gergely</h3>
+          <span class="grade">5. Dan fokozat</span>
           <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
         </article>
         <article class="instructor">
           <div class="avatar" aria-hidden="true">
             <svg viewBox="0 0 100 100"><path d="M20 65 C20 40 35 25 50 25 C65 25 80 40 80 65" fill="none" stroke="var(--ink-faint)" stroke-width="3"/></svg>
           </div>
-          <h3>Oktató neve</h3>
-          <span class="grade">Dan fokozat</span>
+          <h3>Balogh Gábor</h3>
+          <span class="grade">5. Dan fokozat</span>
           <p>Rövid bemutatkozás: hány éve gyakorol, mihez kötődik, mit hoz a szemináriumra.</p>
         </article>
       </div>
@@ -567,7 +572,7 @@
         <h2>Korábbi plakátok és felvételek</h2>
       </div>
       <div class="archive-grid">
-        <div class="archive-item"><span>Plakát — korábbi évnyitó</span></div>
+        <div class="archive-item"><img src="images/archivum/201210_Keiko.jpg" alt="2012-es szeminárium plakátja"><span>Plakát — korábbi évnyitó</span></div>
         <div class="archive-item"><span>Plakát — korábbi szezonnyitó</span></div>
         <div class="archive-item"><span>Videó — edzésrészlet</span></div>
         <div class="archive-item"><span>Plakát — korai évek</span></div>
