@@ -416,6 +416,21 @@
   .youtube-card .link-label{ font-family: var(--font-label); font-size:0.85rem; color: var(--ink-soft); }
   .youtube-card .link-label span{ border-bottom:1px solid var(--ink-faint); }
   .youtube-card:hover .link-label span{ border-color: var(--seal); color: var(--seal); }
+
+  .video-embed{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--ink-faint);
+    background: var(--paper-deep);
+    margin-top: 24px;
+    overflow:hidden;
+  }
+  .video-embed iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
   
   /* ============ JELENTKEZÉS ============ */
   .cta-panel{
@@ -715,6 +730,34 @@
             <span class="link-label"><span>Lejátszási lista megnyitása</span></span>
           </div>
         </a>
+        <div class="archive-sub">
+        <div class="archive-sub-head">
+          <span class="eyebrow">Felvételek</span>
+          <h3>YouTube csatorna</h3>
+        </div>
+        <a class="youtube-card" href="https://youtube.com/playlist?list=PL8ps91iwNp9c9OdW4RowXVBN8DwlcdhHe&si=RacWH_ulUmI4J5VV" target="_blank" rel="noopener">
+          <span class="yt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--seal)" stroke-width="2">
+              <path d="M9 8l7 4-7 4V8z" fill="var(--seal)" stroke="none"/>
+              <rect x="2.5" y="5" width="19" height="14" rx="3"/>
+            </svg>
+          </span>
+          <div>
+            <h4>Aiki-Lab felvételek</h4>
+            <span class="link-label"><span>Lejátszási lista megnyitása</span></span>
+          </div>
+        </a>
+
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=PL8ps91iwNp9c9OdW4RowXVBN8DwlcdhHe"
+            title="Aiki-Lab — YouTube lejátszási lista"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
       </div>
     </div>
   </section>
