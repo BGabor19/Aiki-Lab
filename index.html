@@ -358,7 +358,65 @@
     font-size:0.9rem; color: var(--ink-soft);
     font-family: var(--font-label);
   }
+  
+  /* ============ ARCHÍVUM KIEGÉSZÍTŐK: korábbi oktatók + YouTube ============ */
+  .archive-sub{ margin-top: 56px; }
+  .archive-sub-head{ margin-bottom: 20px; }
+  .archive-sub-head h3{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  }
+  .table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .instructor-table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 0.96rem;
+  }
+  .instructor-table th{
+    text-align:left;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size:0.74rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--seal);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--ink);
+    white-space:nowrap;
+  }
+  .instructor-table td{
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--ink-faint);
+    color: var(--ink-soft);
+  }
+  .instructor-table tr td:first-child{ color: var(--ink); font-weight:600; }
+  .instructor-table tr:hover td{ background: var(--paper); }
 
+  .youtube-card{
+    display:flex; align-items:center; gap:22px;
+    background: var(--paper);
+    border: 1px solid var(--ink-faint);
+    padding: 26px 28px;
+    text-decoration:none;
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .youtube-card:hover{ transform: translateY(-3px); border-color: var(--seal); }
+  .youtube-card .yt-icon{
+    flex:none; width:52px; height:52px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    background: var(--seal-soft);
+  }
+  .youtube-card .yt-icon svg{ width:22px; height:22px; }
+  .youtube-card h4{
+    font-family: var(--font-display); font-weight:600;
+    font-size:1.15rem; margin:0 0 4px; color: var(--ink);
+  }
+  .youtube-card .link-label{ font-family: var(--font-label); font-size:0.85rem; color: var(--ink-soft); }
+  .youtube-card .link-label span{ border-bottom:1px solid var(--ink-faint); }
+  .youtube-card:hover .link-label span{ border-color: var(--seal); color: var(--seal); }
+  
   /* ============ JELENTKEZÉS ============ */
   .cta-panel{
     background: var(--ink);
@@ -616,6 +674,48 @@
       <p class="archive-note">
         2011-ben kezdődtek a három dojo közös baráti gyakorlásai. Nem mindegyiket hirdettük, nem mindegyikhez készült plakát. Reményeink szerint ez a kis kollekció így is ad egy kis történeti áttekintést.
       </p>
+
+        <div class="archive-sub">
+        <div class="archive-sub-head">
+          <span class="eyebrow">Visszatekintés</span>
+          <h3>Korábbi oktatók</h3>
+        </div>
+        <div class="table-scroll">
+          <table class="instructor-table">
+            <thead>
+              <tr>
+                <th>Név</th>
+                <th>Dojo</th>
+                <th>Időszak</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ÍRD ÁT / bővítsd a tényleges nevekkel, dojókkal, időszakokkal -->
+              <tr><td>Név</td><td>Dojo neve</td><td>2011–2014</td></tr>
+              <tr><td>Név</td><td>Dojo neve</td><td>2014–2019</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="archive-sub">
+        <div class="archive-sub-head">
+          <span class="eyebrow">Felvételek</span>
+          <h3>YouTube csatorna</h3>
+        </div>
+        <a class="youtube-card" href="https://youtube.com/playlist?list=PL8ps91iwNp9c9OdW4RowXVBN8DwlcdhHe&si=RacWH_ulUmI4J5VV" target="_blank" rel="noopener">
+          <span class="yt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--seal)" stroke-width="2">
+              <path d="M9 8l7 4-7 4V8z" fill="var(--seal)" stroke="none"/>
+              <rect x="2.5" y="5" width="19" height="14" rx="3"/>
+            </svg>
+          </span>
+          <div>
+            <h4>Aiki-Lab felvételek</h4>
+            <span class="link-label"><span>Lejátszási lista megnyitása</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
